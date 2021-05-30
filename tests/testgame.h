@@ -11,7 +11,6 @@
 #include <QRect>
 #include <QList>
 #include <QPair>
-#include <iostream>
 
 #include "../app/ball.h"
 #include "../app/panel.h"
@@ -321,6 +320,7 @@ TEST(game_test, usual8)
         game.blocks[i].first = false;
     }
     game.update();
+    game.timer->start();
     game.newGame();
     EXPECT_EQ(game.ball->acceleration, QPoint(0, 5));
     for(int i = 0; i < game.blocks.length(); i++) {

@@ -106,7 +106,6 @@ TEST(game_test, setBlocks_false)
 TEST(game_test, resetBlocks)
 {
     Game game;
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -119,8 +118,8 @@ TEST(game_test, resetBlocks)
 
     game.setBlocks(posX, posY, w, h);
     game.resetBlocks();
-    for(int i = 0; i < blocks.length(); i++) {
-        EXPECT_TRUE(blocks[i].first);
+    for(int i = 0; i < game.blocks.length(); i++) {
+        EXPECT_TRUE(game.blocks[i].first);
     }
 }
 
@@ -129,7 +128,6 @@ TEST(game_test, usual)
     Game game;
 
     game.setFieldSize(600, 800);
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -152,7 +150,6 @@ TEST(game_test, usual2)
     Game game;
 
     game.setFieldSize(600, 800);
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -179,7 +176,6 @@ TEST(game_test, usual3)
     Game game;
 
     game.setFieldSize(600, 800);
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -204,7 +200,6 @@ TEST(game_test, usual4)
     Game game;
 
     game.setFieldSize(600, 800);
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -229,7 +224,6 @@ TEST(game_test, usual5)
     Game game;
 
     game.setFieldSize(600, 800);
-    QList<QPair<bool, QRect>> blocks;
 
     QList<int> posX;
     QList<int> posY;
@@ -281,10 +275,58 @@ TEST(game_test, usual7)
     Game game;
 
     game.setPanelSize(10, 10);
-    game.setPanelPos(10, 10);
+    game.setPanelPos(1, 1);
+
+    QPoint res = game.panel->getPos();
+    EXPECT_EQ(res.x(), 1);
+    EXPECT_EQ(res.y(), 1);
+
+    QSize res2 = game.panel->getSize();
+    EXPECT_EQ(res2.width(), 10);
+    EXPECT_EQ(res2.height(), 10);
 
     game.setBallSize(100, 100);
     game.setBallPos(10, 10);
+
+    QPoint res3 = game.ball->getPos();
+    EXPECT_EQ(res3.x(), 10);
+    EXPECT_EQ(res3.y(), 10);
+
+    QSize res4 = game.ball->getSize();
+    EXPECT_EQ(res4.width(), 100);
+    EXPECT_EQ(res4.height(), 100);
 }
+
+TEST(game_test, usual8)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(600, 50));
+    game.ball->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(1, 100);
+
+    for(int i = 0; i < game.blocks.length(); i++) {
+        game.blocks[i].first = false;
+    }
+    game.update();
+    game.newGame();
+    EXPECT_EQ(game.ball->acceleration, QPoint(0, 5));
+    for(int i = 0; i < game.blocks.length(); i++) {
+        EXPECT_TRUE(game.blocks[i].first);
+    }
+}
+
 
 #endif // TESTGAME_H

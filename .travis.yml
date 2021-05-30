@@ -9,6 +9,11 @@ before_install:
     - sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev
     - sudo apt-get install -y qt5-default qttools5-dev-tools
 
+addons:
+    sonarcloud:
+        organization: "kristi-n-i"
+        token: $SONAR_KEY
+
 script:
     - qmake 
     - make
@@ -16,8 +21,8 @@ script:
     
 after_success:
     - coveralls --root . -E ".*external.*" -E ".*tests.*"
-    #- build-wrapper-linux-x86-64 --out-dir bw-output make clean all
-    #- sonar-scanner
+    - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
+    - sonar-scanner
 
 cache:
     directories:

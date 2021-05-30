@@ -11,6 +11,7 @@
 #include <QRect>
 #include <QList>
 #include <QPair>
+#include <iostream>
 
 #include "../app/ball.h"
 #include "../app/panel.h"
@@ -121,6 +122,169 @@ TEST(game_test, resetBlocks)
     for(int i = 0; i < blocks.length(); i++) {
         EXPECT_TRUE(blocks[i].first);
     }
+}
+
+TEST(game_test, usual)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+    QList<QPair<bool, QRect>> blocks;
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(1000, 1000));
+    game.ball->setSize(QSize(1, 1));
+    game.update();
+    EXPECT_TRUE(game.state == GameState::lose);
+}
+
+TEST(game_test, usual2)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+    QList<QPair<bool, QRect>> blocks;
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(100, 100));
+    game.ball->setSize(QSize(2, 2));
+    game.panel->setPos(QPoint(100, 100));
+    game.panel->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(1, 100);
+
+    game.update();
+    EXPECT_EQ(-100, game.ball->acceleration.y());
+}
+
+TEST(game_test, usual3)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+    QList<QPair<bool, QRect>> blocks;
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(0, -1));
+    game.ball->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(1, -100);
+
+    game.update();
+    EXPECT_EQ(100, game.ball->acceleration.y());
+}
+
+TEST(game_test, usual4)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+    QList<QPair<bool, QRect>> blocks;
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(0, 50));
+    game.ball->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(-1, 100);
+
+    game.update();
+    EXPECT_EQ(1, game.ball->acceleration.x());
+}
+
+TEST(game_test, usual5)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+    QList<QPair<bool, QRect>> blocks;
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(600, 50));
+    game.ball->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(1, 100);
+
+    game.update();
+    EXPECT_EQ(-1, game.ball->acceleration.x());
+}
+
+TEST(game_test, usual6)
+{
+    Game game;
+
+    game.setFieldSize(600, 800);
+
+    QList<int> posX;
+    QList<int> posY;
+    int w = 20, h = 30;
+
+    for (int i = 0; i < 10; i++) {
+        posX.push_back(w*i);
+        posY.push_back(0);
+    }
+
+    game.setBlocks(posX, posY, w, h);
+    game.ball->setPos(QPoint(600, 50));
+    game.ball->setSize(QSize(2, 2));
+    game.ball->acceleration = QPoint(1, 100);
+
+    for(int i = 0; i < game.blocks.length(); i++) {
+        game.blocks[i].first = false;
+    }
+    game.update();
+    EXPECT_TRUE(game.state == GameState::win);
+}
+
+TEST(game_test, usual7)
+{
+    Game game;
+
+    game.setPanelSize(10, 10);
+    game.setPanelPos(10, 10);
+
+    game.setBallSize(100, 100);
+    game.setBallPos(10, 10);
 }
 
 #endif // TESTGAME_H

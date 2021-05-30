@@ -5,6 +5,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG += thread
 CONFIG += qt
+QT += core
 
 # gcov
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage

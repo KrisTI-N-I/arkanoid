@@ -1,0 +1,82 @@
+\documentclass[10pt]{beamer}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{unicode=true}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{bookmark}
+\usepackage[english,russian]{babel}
+
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+
+\title{Разработка приложения <<Арканоид>>}
+\subtitle{Отчет о проектной работе по курсу <<Основы информатики и программирования>>}
+\author{Барсукова Кристина Андреевна}
+\date{11 июня 2021}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]{Цель проекта}
+    Цель работы -- разработать игру <<Арканоид>> на C++ и QtQuick, получить опыт создания графических приложений на QtQuick.
+\end{frame}
+
+\begin{frame}{Оригинальный Арканоид}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{images/Arkanoid_NES_screen.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Этапы разработки приложения}
+    \begin{itemize}
+        \item Проектирование QML интерфейса
+        \item Реализация физики шарика и обработчика столкновений
+        \item Соединение графического интерфейса с C++ модулями
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Обработка столкновений}
+    Считается, что объекты столкнулись, если квадраты, в которых они содержатся, пересеклись.
+    \begin{center}
+        \includegraphics{images/collision.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Результат}
+    Реализовано:
+    \begin{itemize}
+        \item Управление игрой с клавиатуры
+        \item Физика шарика
+        \item Обработка столкновений
+        \item Обработка завершения игры (победа или поражение)
+    \end{itemize}
+
+    \begin{center}
+        \includegraphics[scale=0.3]{images/Screenshot_20210601_233616.png}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{Результат}
+    Разработана игра Арканоид. Получилось реализовать всё, что было запланировано.\\
+    Что можно добавить и улучшить:
+    \begin{itemize}
+        \item Улучшить графику
+        \item Добавить режим бесконечной игры
+        \item Улучшить физику шарика
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \Large
+        \underline{Спасибо за внимание!}
+    \end{center}
+\end{frame}
+
+\end{document}
